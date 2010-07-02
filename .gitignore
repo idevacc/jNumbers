@@ -1,0 +1,28 @@
+.DS_Store
+profile
+
+# Xcode per user config
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+
+# Generated files
+VersionX-revision.h
+
+# build products
+build/
+*.[oa]
+
+# Other source repository archive directories (protects when importing)
+.hg
+.svn
+CVS
+
+# automatic backup files
+*~.nib
+*.swp
+*~
+*(Autosaved).rtfd/

@@ -26,8 +26,6 @@
 @property (nonatomic, retain) NSString *errorText;
 
 // Helper functions
-- (void)updateDisplay;
-- (void)appendToDisplayString:(NSString *)character;
 - (void)resetCurrentValue;
 
 // Button click methods

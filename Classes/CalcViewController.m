@@ -6,11 +6,10 @@
 //  Copyright __MyCompanyName__ 2010. All rights reserved.
 //
 
-// TOOD: Handle negative numbers (+/- button)
+// TOOD: 
 //       Resize for large numbers
 //       Comma format large numbers
 //       Stringing up operator (without hitting equal)
-//       What happens when you hit equal twice? Repeat last operation?
 //       Swipe to backspace
 //       Write operator type under number as reminder
 //       Shaking to clear?
@@ -94,11 +93,7 @@
 	// e.g. self.myOutlet = nil;
 }
 
-- (void)updateDisplay:(NSString *)aString {
-	[displayLabel setText:aString];
-	// TODO: Also set new currentValue here?
-}
-
+// All of our cleanup that we need between numbers
 - (void)resetCurrentValue {
 	clearNextButtonPress = NO;
 	decimalMode = NO;
@@ -109,14 +104,13 @@
 // Lumping all the digits into a single method
 - (IBAction)digitClicked:(id)sender {
 
-	// If the equal sign was previously hit, reset currentValue to 0 first
-	// TODO: Still need this now that we have the resetCurrentValue method? Can elminate when memory functions are cleaned up
 	if (clearNextButtonPress)
 		[self resetCurrentValue];
 
 	UIButton *button = (UIButton *)sender;
 	NSString *digit = button.titleLabel.text;
-	
+
+	// Make sure we're not continuing on the default zero
 	if ([displayString isEqualToString:@"0"])
 		[displayString setString:digit];
 	else
@@ -154,8 +148,6 @@
 }
 
 - (IBAction)decimalClicked {
-	// TODO: Can't hit decimal point after equals either
-
 	if (clearNextButtonPress)
 		[self resetCurrentValue];		
 	
@@ -165,8 +157,6 @@
 		[displayLabel setText:displayString];
 		decimalMode = YES;
 	}
-
-	//TODO: Turn off decimalMode where needed
 }
 
 - (IBAction)operationClicked:(id)sender {
@@ -187,11 +177,9 @@
 		[memoryIndicator setHidden:YES];
 	} else if ([memoryType isEqualToString:@"m+"]) {
 		memoryValue += currentValue;
-		clearNextButtonPress = YES;
 		[memoryIndicator setHidden:NO];
 	} else if ([memoryType isEqualToString:@"m-"]) {
 		memoryValue = memoryValue - currentValue;
-		clearNextButtonPress = YES;
 		[memoryIndicator setHidden:NO];
 	} else if ([memoryType isEqualToString:@"mr"]) {
 		[displayString release];
@@ -205,9 +193,16 @@
 
 - (IBAction)equalsClicked {	
 	BOOL divideByZero = NO;
-	
-	// TODO: Hit equal again while clearNextButtonPress, repeat last action
-	
+	double temp;
+
+	// For repeat operation (hitting equal again) swap the 2 values, so we can run the same operation again
+	if (clearNextButtonPress) {
+		temp = previousValue;
+		previousValue = currentValue;
+		currentValue = temp;
+	} else
+		temp = currentValue;
+
 	if ([operationType isEqualToString:@"+"]) {
 		currentValue += previousValue;
 	} else if ([operationType isEqualToString:@"-"]) {
@@ -231,7 +226,9 @@
 		displayString = [[NSMutableString alloc] initWithFormat:@"%g", currentValue];
 		[displayLabel setText:displayString];
 	}
-	
+
+	// Store this, so we can perform the operation again if the equal sign is hit again
+	previousValue = temp;
 	clearNextButtonPress = YES;
 }
 

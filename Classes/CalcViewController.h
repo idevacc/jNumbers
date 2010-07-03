@@ -24,7 +24,7 @@
 
 // Helper functions
 - (void)saveState;
-- (void)resetCurrentValue;
+- (void)resetData;
 
 // Button click methods
 - (IBAction)digitClicked:(id)sender;

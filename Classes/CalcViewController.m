@@ -124,7 +124,7 @@
 }
 
 // All of our cleanup that we need between numbers
-- (void)resetCurrentValue {
+- (void)resetData {
 	clearNextButtonPress = NO;
 	decimalMode = NO;
 	currentValue = 0.0;
@@ -133,9 +133,8 @@
 
 // Lumping all the digits into a single method
 - (IBAction)digitClicked:(id)sender {
-
 	if (clearNextButtonPress)
-		[self resetCurrentValue];
+		[self resetData];
 
 	UIButton *button = (UIButton *)sender;
 	NSString *digit = button.titleLabel.text;
@@ -152,7 +151,7 @@
 
 - (IBAction)delClicked {
 	if (clearNextButtonPress)
-		[self resetCurrentValue];
+		[self resetData];
 	
 	// With one character on the screen, reset it to zero, otherwise, delete last character from the end
 	if ([displayString length] > 1)
@@ -179,7 +178,7 @@
 
 - (IBAction)decimalClicked {
 	if (clearNextButtonPress)
-		[self resetCurrentValue];		
+		[self resetData];		
 	
 	// Only add a decimal point if we don't already have one
 	if (!decimalMode) {
@@ -194,7 +193,6 @@
 	[self setOperationType:button.titleLabel.text];
 		
 	previousValue = currentValue;
-	[self resetCurrentValue];
 	clearNextButtonPress = YES;
 }
 
@@ -212,7 +210,8 @@
 		memoryValue = memoryValue - currentValue;
 		[memoryIndicator setHidden:NO];
 	} else if ([memoryType isEqualToString:@"mr"]) {
-		// BUG: Hitting equal twice doesn't work after mr
+		// FIXME: Hitting equal twice doesn't work after mr
+		// FIXME: Do I need release/initWithFormat here?
 		[displayString release];
 		displayString = [[NSMutableString alloc] initWithFormat:@"%g", memoryValue];
 
@@ -264,7 +263,7 @@
 }
 
 - (IBAction)clearClicked {
-	[self resetCurrentValue];
+	[self resetData];
 	[displayLabel setText:displayString];
 }
 

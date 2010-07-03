@@ -10,12 +10,10 @@
 
 @interface CalcViewController : UIViewController {
 	UILabel *displayLabel;
-	// TODO: label is hiding under other label?
 	UILabel *memoryIndicator;
-	UIButton *activeButton;
 	
 	double currentValue, previousValue, memoryValue;
-	NSString *operationType, *errorText;
+	NSString *operationType;
 	NSMutableString *displayString;
 	BOOL clearNextButtonPress, decimalMode;
 }
@@ -23,9 +21,9 @@
 @property (nonatomic, retain) IBOutlet UILabel *displayLabel;
 @property (nonatomic, retain) IBOutlet UILabel *memoryIndicator;
 @property (nonatomic, retain) NSString *operationType;
-@property (nonatomic, retain) NSString *errorText;
 
 // Helper functions
+- (void)saveState;
 - (void)resetCurrentValue;
 
 // Button click methods

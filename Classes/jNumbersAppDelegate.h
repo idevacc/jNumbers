@@ -12,11 +12,11 @@
 
 @interface jNumbersAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    CalcViewController *viewController;
+    CalcViewController *cAlcController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet CalcViewController *viewController;
+@property (nonatomic, retain) IBOutlet CalcViewController *calcController;
 
 @end
 

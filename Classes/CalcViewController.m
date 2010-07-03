@@ -13,7 +13,11 @@
 //       Swipe to backspace
 //       Write operator type under number as reminder
 //       Shaking to clear?
+//       What happens if you hit equals when you first start up the app?
+//       Stack of previous results. Swipe display to move between them. (use stack for double equal sign saving too).
+//       Toggle size of display to include more history; eliminate memory buttons? (swipe up and down to scroll; button above 7 toggles modes or downwipe on display expands)
 //       What happens if you hit equal without an operator active?
+//       Swipe over section of memory buttons to reveal additional controls (PageControl? With arrow indicator on the left right).
 //       Hitting clear twice 'forgets' last operation type
 //       Don't truncate results after 6 decimal points
 //       Highlight button (digit, operator) that you've just clicked, like Apple's calculator;
@@ -35,7 +39,7 @@
 @implementation CalcViewController
 
 @synthesize displayLabel, memoryIndicator;
-@synthesize operationType, errorText;
+@synthesize operationType;
 
 /*
 // The designated initializer. Override to perform setup that is required before the view is loaded.
@@ -56,14 +60,23 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-	currentValue = 0.0;
-	previousValue = 0.0;
-	memoryValue = 0.0;
+	// Attempt to restore data from UserDefaults if set (from potential pervious termination)
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSLog(@"Dictionary: %@", [defaults dictionaryRepresentation]);
 
-	clearNextButtonPress = NO;
-	decimalMode = NO;
+	currentValue = [defaults doubleForKey:@"currentValue"];
+	previousValue = [defaults doubleForKey:@"previousValue"];
+	if (memoryValue = [defaults doubleForKey:@"memoryValue"])
+		[memoryIndicator setHidden:NO];
 
-	displayString = [[NSMutableString alloc] initWithString:@"0"];
+	clearNextButtonPress = [defaults boolForKey:@"clearNextButtonPress"];
+	decimalMode = [defaults boolForKey:@"decimaMode"];
+
+	self.operationType = [defaults objectForKey:@"operationType"];
+
+	if (!(displayString = [[NSMutableString alloc] initWithString:[defaults objectForKey:@"displayString"]]))
+		displayString = [[NSMutableString alloc] initWithString:@"0"];
+	[displayLabel setText:displayString];
 	
 	// Overide the font with something nicer
 //	UIFont *lcdFont = [UIFont fontWithName:@"DBLCDTempBlack" size:48.0]; 
@@ -91,6 +104,23 @@
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+}
+
+// Save calculator related state
+- (void)saveState {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	[defaults setObject:displayString forKey:@"displayString"];
+	[defaults setObject:operationType forKey:@"operationType"];
+	[defaults setDouble:currentValue forKey:@"currentValue"];
+	[defaults setDouble:previousValue forKey:@"previousValue"];
+	[defaults setDouble:memoryValue forKey:@"memoryValue"];
+	[defaults setBool:clearNextButtonPress forKey:@"clearNextButtonPress"];
+	[defaults setBool:decimalMode forKey:@"decimalMode"];
+
+	[defaults synchronize];
+
+	NSLog(@"after save Dictionary: %@", [defaults dictionaryRepresentation]);
 }
 
 // All of our cleanup that we need between numbers
@@ -182,6 +212,7 @@
 		memoryValue = memoryValue - currentValue;
 		[memoryIndicator setHidden:NO];
 	} else if ([memoryType isEqualToString:@"mr"]) {
+		// BUG: Hitting equal twice doesn't work after mr
 		[displayString release];
 		displayString = [[NSMutableString alloc] initWithFormat:@"%g", memoryValue];
 
@@ -234,7 +265,7 @@
 
 - (IBAction)clearClicked {
 	[self resetCurrentValue];
-	[displayLabel setText:@"0"];
+	[displayLabel setText:displayString];
 }
 
 - (void)dealloc {

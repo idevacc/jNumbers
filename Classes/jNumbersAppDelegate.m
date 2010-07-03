@@ -12,7 +12,7 @@
 @implementation jNumbersAppDelegate
 
 @synthesize window;
-@synthesize viewController;
+@synthesize calcController;
 
 
 #pragma mark -
@@ -23,7 +23,7 @@
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
-	[window addSubview:viewController.view];
+	[window addSubview:calcController.view];
     [window makeKeyAndVisible];
 
     return YES;
@@ -43,6 +43,11 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
+	
+	NSLog(@"Entered background");
+	
+	// Save state in case the app gets terminated eventually
+	[calcController saveState];
 }
 
 
@@ -65,6 +70,8 @@
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
      */
+
+	NSLog(@"Will terminate");
 }
 
 
@@ -79,7 +86,7 @@
 
 
 - (void)dealloc {
-    [viewController release];
+    [calcController release];
     [window release];
     [super dealloc];
 }

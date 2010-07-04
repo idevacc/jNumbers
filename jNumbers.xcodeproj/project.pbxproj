@@ -18,6 +18,7 @@
 		ED07B7A911D906B300F82BB6 /* CustomUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ED07B7A811D906B300F82BB6 /* CustomUIButton.m */; };
 		ED4A7DB111D81D110087EAB9 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = ED4A7DB011D81D110087EAB9 /* icon.png */; };
 		EDAF9A3D11E00B510041C2E2 /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9A3C11E00B510041C2E2 /* TODO */; };
+		EDAF9A4011E011800041C2E2 /* CHANGELOG in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9A3F11E011800041C2E2 /* CHANGELOG */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		ED07B7A811D906B300F82BB6 /* CustomUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUIButton.m; sourceTree = "<group>"; };
 		ED4A7DB011D81D110087EAB9 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		EDAF9A3C11E00B510041C2E2 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
+		EDAF9A3F11E011800041C2E2 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		EDC2838411D81F6400CB0508 /* jNumbers-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "jNumbers-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				EDAF9A3C11E00B510041C2E2 /* TODO */,
+				EDAF9A3F11E011800041C2E2 /* CHANGELOG */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -164,6 +167,7 @@
 				2899E5220DE3E06400AC0155 /* CalcViewController.xib in Resources */,
 				ED4A7DB111D81D110087EAB9 /* icon.png in Resources */,
 				EDAF9A3D11E00B510041C2E2 /* TODO in Resources */,
+				EDAF9A4011E011800041C2E2 /* CHANGELOG in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

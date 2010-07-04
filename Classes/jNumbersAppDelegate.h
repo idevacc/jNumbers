@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#define kVersion @"0.01"
+
 @class CalcViewController;
 
 @interface jNumbersAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
     CalcViewController *cAlcController;
+
+	static NSString *kVersion = @"0.01";
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

@@ -293,8 +293,7 @@
 	[operationIndicator release];
 	[operationType release];
 	[displayString release];
-	[soundPlayer release];
-    [super dealloc];
+	[super dealloc];
 }
 
 @end

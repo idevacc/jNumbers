@@ -10,7 +10,7 @@
 
 @implementation CalcViewController
 
-@synthesize displayLabel, memoryIndicator, operationIndicator;
+@synthesize displayLabel, versionLabel, memoryIndicator, operationIndicator;
 @synthesize operationType, displayString;
 
 /*
@@ -32,6 +32,11 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+	NSString *versionString = [NSString stringWithFormat:@"v%@ (%@)",
+							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
+							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
+	[versionLabel setText:versionString];
+	
 	// Attempt to restore data from UserDefaults if set (from potential pervious termination)
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
@@ -49,7 +54,7 @@
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:@"0" forKey:@"displayString"]];
 	[self setDisplayString:[NSMutableString stringWithString:[defaults objectForKey:@"displayString"]]];
 	[displayLabel setText:displayString];
-	
+
 	[super viewDidLoad];
 }
 

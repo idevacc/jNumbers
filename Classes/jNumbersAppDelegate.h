@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define kVersion @"0.01"
-
 @class CalcViewController;
 
 @interface jNumbersAppDelegate : NSObject <UIApplicationDelegate> {

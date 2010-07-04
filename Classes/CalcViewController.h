@@ -12,6 +12,7 @@
 	UILabel *displayLabel;
 	UILabel *memoryIndicator;
 	UILabel *operationIndicator;
+	UILabel *versionLabel;
 	
 	double currentValue, previousValue, memoryValue;
 	NSString *operationType;
@@ -22,6 +23,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *displayLabel;
 @property (nonatomic, retain) IBOutlet UILabel *memoryIndicator;
 @property (nonatomic, retain) IBOutlet UILabel *operationIndicator;
+@property (nonatomic, retain) IBOutlet UILabel *versionLabel;
 @property (nonatomic, retain) NSString *operationType;
 @property (nonatomic, retain) NSString *displayString;
 

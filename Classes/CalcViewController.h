@@ -11,6 +11,7 @@
 @interface CalcViewController : UIViewController {
 	UILabel *displayLabel;
 	UILabel *memoryIndicator;
+	UILabel *operationIndicator;
 	
 	double currentValue, previousValue, memoryValue;
 	NSString *operationType;
@@ -20,6 +21,7 @@
 
 @property (nonatomic, retain) IBOutlet UILabel *displayLabel;
 @property (nonatomic, retain) IBOutlet UILabel *memoryIndicator;
+@property (nonatomic, retain) IBOutlet UILabel *operationIndicator;
 @property (nonatomic, retain) NSString *operationType;
 
 // Helper functions

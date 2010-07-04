@@ -10,7 +10,7 @@
 
 @implementation CalcViewController
 
-@synthesize displayLabel, memoryIndicator;
+@synthesize displayLabel, memoryIndicator, operationIndicator;
 @synthesize operationType;
 
 /*
@@ -34,7 +34,6 @@
 - (void)viewDidLoad {
 	// Attempt to restore data from UserDefaults if set (from potential pervious termination)
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSLog(@"Dictionary: %@", [defaults dictionaryRepresentation]);
 
 	currentValue = [defaults doubleForKey:@"currentValue"];
 	previousValue = [defaults doubleForKey:@"previousValue"];
@@ -45,15 +44,11 @@
 	decimalMode = [defaults boolForKey:@"decimaMode"];
 
 	self.operationType = [defaults objectForKey:@"operationType"];
+	[operationIndicator setText:operationType]; 
 
 	if (!(displayString = [[NSMutableString alloc] initWithString:[defaults objectForKey:@"displayString"]]))
 		displayString = [[NSMutableString alloc] initWithString:@"0"];
 	[displayLabel setText:displayString];
-	
-	// Overide the font with something nicer
-//	UIFont *lcdFont = [UIFont fontWithName:@"DBLCDTempBlack" size:48.0]; 
-//	[displayLabel setFont:lcdFont];
-//	[lcdFont release];
 	
 	[super viewDidLoad];
 }
@@ -91,8 +86,6 @@
 	[defaults setBool:decimalMode forKey:@"decimalMode"];
 
 	[defaults synchronize];
-
-	NSLog(@"after save Dictionary: %@", [defaults dictionaryRepresentation]);
 }
 
 // All of our cleanup that we need between numbers
@@ -163,7 +156,8 @@
 - (IBAction)operationClicked:(id)sender {
 	UIButton *button = (UIButton *)sender;
 	[self setOperationType:button.titleLabel.text];
-		
+	[operationIndicator setText:operationType]; 
+
 	previousValue = currentValue;
 	clearNextButtonPress = YES;
 }
@@ -196,6 +190,10 @@
 - (IBAction)equalsClicked {	
 	BOOL divideByZero = NO;
 	double temp;
+	
+	// Do nothing if there's no current active operation
+	if (!operationType)
+		return;
 
 	// For repeat operation (hitting equal again) swap the 2 values, so we can run the same operation again
 	if (clearNextButtonPress) {
@@ -235,6 +233,12 @@
 }
 
 - (IBAction)clearClicked {
+	// Hitting clear twice or after the result of an operation cancels out saved operation type
+	if ([displayString isEqualToString:@"0"] || clearNextButtonPress) {
+		self.operationType = nil; 
+		[operationIndicator setText:@""];
+	}
+	
 	[self resetData];
 	[displayLabel setText:displayString];
 }

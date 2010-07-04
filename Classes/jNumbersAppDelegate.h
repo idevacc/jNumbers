@@ -15,8 +15,6 @@
 @interface jNumbersAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
     CalcViewController *cAlcController;
-
-	static NSString *kVersion = @"0.01";
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

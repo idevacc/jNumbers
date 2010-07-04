@@ -1,0 +1,36 @@
+
+Application:
+* Fully iOS 4.0 compatibilityt (fast app switching with resource cleanup)
+* Full state saving
+* Device rotation
+* Settings? (color scheme)
+* Page Controller to change between calc/unit converter/tip calculator/ Or just swipe across the screen?
+* Copy & Paste data between these apps
+
+Display (Calc):
+* What happens for realy large numbers?
+* Commas in large numbers
+* Better decimal point truncation (swipe left/right on display to reveal more of the number?)
+* Show operator type in left hand icon bar as reminder
+* Stack of previous results. Swipe display to move between them. (use stack for double equal sign saving too). 
+* Swipe down on display to enlargen for 'history' view (what buttons go away?). Button above 7 could also toggle
+* Try custom font (from http://www.dafont.com) via FontLabel (http://github.com/zynga/FontLabel)
+
+Input (Calc):
+* Shake to clear (or reset even more?) 
+* Swipe to backspace?
+* Images for the buttons
+* Make top button row swipable, so that other functions can be called up. Arrow indicators on the sides.
+* Highlight button (digit, operator) that you've just clicked, like Apple's calculator;
+
+Math (Calc):
+* Stringing up operator (without hitting equal)
+* Parantheses 
+* Scientific operations
+* Square roots, power of
+
+
+Test for:
+* What happens if you hit equals when you first start up the app?
+* What happens if you hit equal without an operator active?
+* Hitting clear twice 'forgets' last operation type

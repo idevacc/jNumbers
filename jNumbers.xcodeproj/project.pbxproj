@@ -17,6 +17,7 @@
 		28D7ACF80DDB3853001CB0EB /* CalcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* CalcViewController.m */; };
 		ED07B7A911D906B300F82BB6 /* CustomUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = ED07B7A811D906B300F82BB6 /* CustomUIButton.m */; };
 		ED4A7DB111D81D110087EAB9 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = ED4A7DB011D81D110087EAB9 /* icon.png */; };
+		EDAF9A3D11E00B510041C2E2 /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9A3C11E00B510041C2E2 /* TODO */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		ED07B7A711D906B300F82BB6 /* CustomUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUIButton.h; sourceTree = "<group>"; };
 		ED07B7A811D906B300F82BB6 /* CustomUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUIButton.m; sourceTree = "<group>"; };
 		ED4A7DB011D81D110087EAB9 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		EDAF9A3C11E00B510041C2E2 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		EDC2838411D81F6400CB0508 /* jNumbers-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "jNumbers-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +78,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				EDAF9A3C11E00B510041C2E2 /* TODO */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -160,6 +163,7 @@
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* CalcViewController.xib in Resources */,
 				ED4A7DB111D81D110087EAB9 /* icon.png in Resources */,
+				EDAF9A3D11E00B510041C2E2 /* TODO in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

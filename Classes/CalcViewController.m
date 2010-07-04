@@ -6,34 +6,6 @@
 //  Copyright __MyCompanyName__ 2010. All rights reserved.
 //
 
-// TOOD: 
-//       Resize for large numbers
-//       Comma format large numbers
-//       Stringing up operator (without hitting equal)
-//       Swipe to backspace
-//       Write operator type under number as reminder
-//       Shaking to clear?
-//       What happens if you hit equals when you first start up the app?
-//       Stack of previous results. Swipe display to move between them. (use stack for double equal sign saving too).
-//       Toggle size of display to include more history; eliminate memory buttons? (swipe up and down to scroll; button above 7 toggles modes or downwipe on display expands)
-//       What happens if you hit equal without an operator active?
-//       Swipe over section of memory buttons to reveal additional controls (PageControl? With arrow indicator on the left right).
-//       Hitting clear twice 'forgets' last operation type
-//       Don't truncate results after 6 decimal points
-//       Highlight button (digit, operator) that you've just clicked, like Apple's calculator;
-//       Memory icon in its own space so it won't get overwritten
-//       Restore state from last time app ran
-//       Try custom font (from http://www.dafont.com) via FontLabel (http://github.com/zynga/FontLabel)
-//       Rotation handling
-//       iOS 4.0 compliant (but 3.x backwards compatible)
-//       Use images for buttons
-//       Settings (edit colors, font) triggered by 'info circle' button
-//       Parantheses 
-//       Proper icon
-//       Scientific forumulas
-//       Page Controller to change between calc/unit converter/tip calculator/ Or just swipe across the screen?
-//       Copy & Paste data between these apps
-
 #import "CalcViewController.h"
 
 @implementation CalcViewController

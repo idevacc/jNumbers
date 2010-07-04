@@ -9,7 +9,7 @@ Application:
 
 Display (Calc):
 * What happens for realy large numbers?
-* Commas in large numbers
+* Commas in large numbers (use NSNumberFormatter)
 * Better decimal point truncation (swipe left/right on display to reveal more of the number?)
 * Show operator type in left hand icon bar as reminder
 * Stack of previous results. Swipe display to move between them. (use stack for double equal sign saving too). 

@@ -44,8 +44,6 @@
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
 	
-	NSLog(@"Entered background");
-	
 	// Save state in case the app gets terminated eventually
 	[calcController saveState];
 }
@@ -70,8 +68,6 @@
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
      */
-
-	NSLog(@"Will terminate");
 }
 
 

@@ -14,7 +14,7 @@
 
 @interface jNumbersAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    CalcViewController *cAlcController;
+    CalcViewController *calcController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

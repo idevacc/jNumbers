@@ -11,7 +11,7 @@
 @implementation CalcViewController
 
 @synthesize displayLabel, memoryIndicator, operationIndicator;
-@synthesize operationType;
+@synthesize operationType, displayString;
 
 /*
 // The designated initializer. Override to perform setup that is required before the view is loaded.
@@ -43,12 +43,11 @@
 	clearNextButtonPress = [defaults boolForKey:@"clearNextButtonPress"];
 	decimalMode = [defaults boolForKey:@"decimaMode"];
 
-	self.operationType = [defaults objectForKey:@"operationType"];
+	[self setOperationType:[defaults objectForKey:@"operationType"]];
 	[operationIndicator setText:operationType]; 
 
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:@"0" forKey:@"displayString"]];
-	if (!(displayString = [[NSMutableString alloc] initWithString:[defaults objectForKey:@"displayString"]]))
-		displayString = [[NSMutableString alloc] initWithString:@"0"];
+	[self setDisplayString:[NSMutableString stringWithString:[defaults objectForKey:@"displayString"]]];
 	[displayLabel setText:displayString];
 	
 	[super viewDidLoad];
@@ -178,9 +177,7 @@
 		[memoryIndicator setHidden:NO];
 	} else if ([memoryType isEqualToString:@"mr"]) {
 		// FIXME: Hitting equal twice doesn't work after mr
-		// FIXME: Do I need release/initWithFormat here?
-		[displayString release];
-		displayString = [[NSMutableString alloc] initWithFormat:@"%g", memoryValue];
+		[self setDisplayString:[NSMutableString stringWithFormat:@"%g", memoryValue]];
 
 		[displayLabel setText:displayString];
 		currentValue = memoryValue;
@@ -223,8 +220,7 @@
 		currentValue = 0.0f;
 	}
 	else {
-		[displayString release];
-		displayString = [[NSMutableString alloc] initWithFormat:@"%g", currentValue];
+		[self setDisplayString:[NSMutableString stringWithFormat:@"%g", currentValue]];
 		[displayLabel setText:displayString];
 	}
 
@@ -236,7 +232,7 @@
 - (IBAction)clearClicked {
 	// Hitting clear twice or after the result of an operation cancels out saved operation type
 	if ([displayString isEqualToString:@"0"] || clearNextButtonPress) {
-		self.operationType = nil; 
+		[self setOperationType:@""]; 
 		[operationIndicator setText:@""];
 	}
 	
@@ -246,6 +242,8 @@
 
 - (void)dealloc {
 	[displayLabel release];
+	[memoryIndicator release];
+	[operationIndicator release];
 	[operationType release];
 	[displayString release];
     [super dealloc];

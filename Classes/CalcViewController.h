@@ -23,6 +23,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *memoryIndicator;
 @property (nonatomic, retain) IBOutlet UILabel *operationIndicator;
 @property (nonatomic, retain) NSString *operationType;
+@property (nonatomic, retain) NSString *displayString;
 
 // Helper functions
 - (void)saveState;

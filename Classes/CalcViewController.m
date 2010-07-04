@@ -7,6 +7,7 @@
 //
 
 #import "CalcViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation CalcViewController
 
@@ -32,10 +33,17 @@
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+	// Set version string field
 	NSString *versionString = [NSString stringWithFormat:@"v%@ (%@)",
 							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
 							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
 	[versionLabel setText:versionString];
+	
+	// Intialize button click sound data
+	clickSounds = [[NSDictionary dictionaryWithObjectsAndKeys:@"beep-28", @"digit", @"beep-29", @"operation", @"button-16", @"del", 
+				                                             @"beep-21", @"decimal", @"button-50", @"equals", @"button-20", @"memory",
+				                                             @"button-43", @"negate", @"beep-26", @"clear", @"beep-10", @"error", nil] retain];
+	// FIXME: Slight lockup the first time a button is clicked before audio is played. Try System Sound Services
 	
 	// Attempt to restore data from UserDefaults if set (from potential pervious termination)
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -47,6 +55,7 @@
 
 	clearNextButtonPress = [defaults boolForKey:@"clearNextButtonPress"];
 	decimalMode = [defaults boolForKey:@"decimaMode"];
+	staySilent = [defaults boolForKey:@"staySilent"];
 
 	[self setOperationType:[defaults objectForKey:@"operationType"]];
 	[operationIndicator setText:operationType]; 
@@ -101,8 +110,26 @@
 	[displayString setString:@"0"];
 }
 
+- (void)playSound:(NSString *)soundType {
+	if (staySilent)
+		return;
+
+    NSString *path = [[NSBundle mainBundle] pathForResource:[clickSounds objectForKey:soundType] ofType:@"mp3"];
+    NSURL *file = [[NSURL alloc] initFileURLWithPath:path];
+	
+    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:file error:nil];
+    [file release];
+	
+    [player prepareToPlay];
+    [player setDelegate:self];
+	[player play];
+	// FIXME: track down 'AddRunningClient starting device on non-zero client count' error.
+}
+
 // Lumping all the digits into a single method
 - (IBAction)digitClicked:(id)sender {
+	[self playSound:@"digit"];
+	
 	if (clearNextButtonPress)
 		[self resetData];
 
@@ -120,6 +147,8 @@
 }
 
 - (IBAction)delClicked {
+	[self playSound:@"del"];
+
 	if (clearNextButtonPress)
 		[self resetData];
 	
@@ -140,13 +169,16 @@
 	} else if (currentValue < 0) {
 		[displayString replaceOccurrencesOfString:@"-" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [displayString length])];
 	} else
-		return;	
-
+		return;
+	
+	[self playSound:@"negate"];
 	[displayLabel setText:displayString];	
 	currentValue *= -1.0f;
 }
 
 - (IBAction)decimalClicked {
+	[self playSound:@"decimal"];
+
 	if (clearNextButtonPress)
 		[self resetData];		
 	
@@ -159,6 +191,8 @@
 }
 
 - (IBAction)operationClicked:(id)sender {
+	[self playSound:@"operation"];
+
 	UIButton *button = (UIButton *)sender;
 	[self setOperationType:button.titleLabel.text];
 	[operationIndicator setText:operationType]; 
@@ -168,6 +202,8 @@
 }
 
 - (IBAction)memoryClicked:(id)sender {
+	[self playSound:@"memory"];
+
 	UIButton *button = (UIButton *)sender;
 	NSString *memoryType = button.titleLabel.text;
 	
@@ -221,10 +257,14 @@
 	}
 	
 	if (divideByZero) {
+		[self playSound:@"error"];
+
 		[displayLabel setText:@"divide by zero error"];
 		currentValue = 0.0f;
 	}
 	else {
+		[self playSound:@"equals"];
+
 		[self setDisplayString:[NSMutableString stringWithFormat:@"%g", currentValue]];
 		[displayLabel setText:displayString];
 	}
@@ -235,6 +275,8 @@
 }
 
 - (IBAction)clearClicked {
+	[self playSound:@"clear"];
+
 	// Hitting clear twice or after the result of an operation cancels out saved operation type
 	if ([displayString isEqualToString:@"0"] || clearNextButtonPress) {
 		[self setOperationType:@""]; 
@@ -251,6 +293,7 @@
 	[operationIndicator release];
 	[operationType release];
 	[displayString release];
+	[soundPlayer release];
     [super dealloc];
 }
 

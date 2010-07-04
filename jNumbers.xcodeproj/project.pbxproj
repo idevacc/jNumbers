@@ -20,6 +20,16 @@
 		EDAF9A3D11E00B510041C2E2 /* TODO in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9A3C11E00B510041C2E2 /* TODO */; };
 		EDAF9A4011E011800041C2E2 /* CHANGELOG in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9A3F11E011800041C2E2 /* CHANGELOG */; };
 		EDAF9B0211E03F1F0041C2E2 /* README in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9B0111E03F1F0041C2E2 /* README */; };
+		EDAF9BE611E062EC0041C2E2 /* beep-21.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BDE11E062EC0041C2E2 /* beep-21.mp3 */; };
+		EDAF9BE711E062EC0041C2E2 /* beep-26.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BDF11E062EC0041C2E2 /* beep-26.mp3 */; };
+		EDAF9BE811E062EC0041C2E2 /* beep-28.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BE011E062EC0041C2E2 /* beep-28.mp3 */; };
+		EDAF9BE911E062EC0041C2E2 /* beep-29.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BE111E062EC0041C2E2 /* beep-29.mp3 */; };
+		EDAF9BEA11E062EC0041C2E2 /* button-16.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BE211E062EC0041C2E2 /* button-16.mp3 */; };
+		EDAF9BEB11E062EC0041C2E2 /* button-20.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BE311E062EC0041C2E2 /* button-20.mp3 */; };
+		EDAF9BEC11E062EC0041C2E2 /* button-43.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BE411E062EC0041C2E2 /* button-43.mp3 */; };
+		EDAF9BED11E062EC0041C2E2 /* button-50.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BE511E062EC0041C2E2 /* button-50.mp3 */; };
+		EDAF9BF211E063EA0041C2E2 /* beep-10.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BF111E063EA0041C2E2 /* beep-10.mp3 */; };
+		EDAF9BFB11E065570041C2E2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDAF9BFA11E065570041C2E2 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +51,16 @@
 		EDAF9A3C11E00B510041C2E2 /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		EDAF9A3F11E011800041C2E2 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		EDAF9B0111E03F1F0041C2E2 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		EDAF9BDE11E062EC0041C2E2 /* beep-21.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "beep-21.mp3"; sourceTree = "<group>"; };
+		EDAF9BDF11E062EC0041C2E2 /* beep-26.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "beep-26.mp3"; sourceTree = "<group>"; };
+		EDAF9BE011E062EC0041C2E2 /* beep-28.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "beep-28.mp3"; sourceTree = "<group>"; };
+		EDAF9BE111E062EC0041C2E2 /* beep-29.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "beep-29.mp3"; sourceTree = "<group>"; };
+		EDAF9BE211E062EC0041C2E2 /* button-16.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "button-16.mp3"; sourceTree = "<group>"; };
+		EDAF9BE311E062EC0041C2E2 /* button-20.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "button-20.mp3"; sourceTree = "<group>"; };
+		EDAF9BE411E062EC0041C2E2 /* button-43.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "button-43.mp3"; sourceTree = "<group>"; };
+		EDAF9BE511E062EC0041C2E2 /* button-50.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "button-50.mp3"; sourceTree = "<group>"; };
+		EDAF9BF111E063EA0041C2E2 /* beep-10.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "beep-10.mp3"; sourceTree = "<group>"; };
+		EDAF9BFA11E065570041C2E2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EDC2838411D81F6400CB0508 /* jNumbers-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "jNumbers-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -52,6 +72,7 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				EDAF9BFB11E065570041C2E2 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +111,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				EDAF9BFA11E065570041C2E2 /* AVFoundation.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -106,6 +128,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EDAF9BCC11E061D20041C2E2 /* Sounds */,
 				ED4A7DB011D81D110087EAB9 /* icon.png */,
 				2899E5210DE3E06400AC0155 /* CalcViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
@@ -122,6 +145,22 @@
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EDAF9BCC11E061D20041C2E2 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				EDAF9BDE11E062EC0041C2E2 /* beep-21.mp3 */,
+				EDAF9BF111E063EA0041C2E2 /* beep-10.mp3 */,
+				EDAF9BDF11E062EC0041C2E2 /* beep-26.mp3 */,
+				EDAF9BE011E062EC0041C2E2 /* beep-28.mp3 */,
+				EDAF9BE111E062EC0041C2E2 /* beep-29.mp3 */,
+				EDAF9BE211E062EC0041C2E2 /* button-16.mp3 */,
+				EDAF9BE311E062EC0041C2E2 /* button-20.mp3 */,
+				EDAF9BE411E062EC0041C2E2 /* button-43.mp3 */,
+				EDAF9BE511E062EC0041C2E2 /* button-50.mp3 */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,6 +211,15 @@
 				EDAF9A3D11E00B510041C2E2 /* TODO in Resources */,
 				EDAF9A4011E011800041C2E2 /* CHANGELOG in Resources */,
 				EDAF9B0211E03F1F0041C2E2 /* README in Resources */,
+				EDAF9BE611E062EC0041C2E2 /* beep-21.mp3 in Resources */,
+				EDAF9BE711E062EC0041C2E2 /* beep-26.mp3 in Resources */,
+				EDAF9BE811E062EC0041C2E2 /* beep-28.mp3 in Resources */,
+				EDAF9BE911E062EC0041C2E2 /* beep-29.mp3 in Resources */,
+				EDAF9BEA11E062EC0041C2E2 /* button-16.mp3 in Resources */,
+				EDAF9BEB11E062EC0041C2E2 /* button-20.mp3 in Resources */,
+				EDAF9BEC11E062EC0041C2E2 /* button-43.mp3 in Resources */,
+				EDAF9BED11E062EC0041C2E2 /* button-50.mp3 in Resources */,
+				EDAF9BF211E063EA0041C2E2 /* beep-10.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +246,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joost Schuur (5QJA93YL8A)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

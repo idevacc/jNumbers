@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface CalcViewController : UIViewController {
+@interface CalcViewController : UIViewController <AVAudioPlayerDelegate> {
 	UILabel *displayLabel;
 	UILabel *memoryIndicator;
 	UILabel *operationIndicator;
@@ -17,7 +18,8 @@
 	double currentValue, previousValue, memoryValue;
 	NSString *operationType;
 	NSMutableString *displayString;
-	BOOL clearNextButtonPress, decimalMode;
+	BOOL clearNextButtonPress, decimalMode, staySilent;
+	NSDictionary *clickSounds;
 }
 
 @property (nonatomic, retain) IBOutlet UILabel *displayLabel;
@@ -30,6 +32,7 @@
 // Helper functions
 - (void)saveState;
 - (void)resetData;
+- (void)playSound:(NSString *)soundType;
 
 // Button click methods
 - (IBAction)digitClicked:(id)sender;

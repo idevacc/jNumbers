@@ -3,6 +3,7 @@ Application:
 * Fully iOS 4.0 compatibility (fast app switching with resource cleanup)
 * Full state saving
 * Device rotation
+* Shake to toggle audio
 * Settings? (color scheme)
 * Page Controller to change between calc/unit converter/tip calculator/ Or just swipe across the screen?
 * Copy & Paste data between these apps
@@ -17,10 +18,8 @@ Display (Calc):
 * Try custom font (from http://www.dafont.com) via FontLabel (http://github.com/zynga/FontLabel)
 
 Input (Calc):
-* Play sound on click
-* Shake to clear (or reset even more?) 
-* Swipe to backspace?
-* Images for the buttons
+* Play sound on click (http://www.soundjay.com/button-sounds-1.html)
+* Images or gradients for the buttons (http://code.google.com/p/iphonegradientbuttons/)
 * Make top button row swipable, so that other functions can be called up. Arrow indicators on the sides.
 * Highlight button (digit, operator) that you've just clicked, like Apple's calculator;
 

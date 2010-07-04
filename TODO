@@ -1,6 +1,6 @@
 
 Application:
-* Fully iOS 4.0 compatibilityt (fast app switching with resource cleanup)
+* Fully iOS 4.0 compatibility (fast app switching with resource cleanup)
 * Full state saving
 * Device rotation
 * Settings? (color scheme)
@@ -17,6 +17,7 @@ Display (Calc):
 * Try custom font (from http://www.dafont.com) via FontLabel (http://github.com/zynga/FontLabel)
 
 Input (Calc):
+* Play sound on click
 * Shake to clear (or reset even more?) 
 * Swipe to backspace?
 * Images for the buttons

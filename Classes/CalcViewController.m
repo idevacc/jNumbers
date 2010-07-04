@@ -46,6 +46,7 @@
 	self.operationType = [defaults objectForKey:@"operationType"];
 	[operationIndicator setText:operationType]; 
 
+	[defaults registerDefaults:[NSDictionary dictionaryWithObject:@"0" forKey:@"displayString"]];
 	if (!(displayString = [[NSMutableString alloc] initWithString:[defaults objectForKey:@"displayString"]]))
 		displayString = [[NSMutableString alloc] initWithString:@"0"];
 	[displayLabel setText:displayString];

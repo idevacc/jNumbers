@@ -40,9 +40,12 @@
 	[versionLabel setText:versionString];
 	
 	// Intialize button click sound data
-	clickSounds = [[NSDictionary dictionaryWithObjectsAndKeys:@"beep-28", @"digit", @"beep-29", @"operation", @"button-16", @"del", 
-				                                             @"beep-21", @"decimal", @"button-50", @"equals", @"button-20", @"memory",
-				                                             @"button-43", @"negate", @"beep-26", @"clear", @"beep-10", @"error", nil] retain];
+	clickSounds = [[NSDictionary dictionaryWithObjectsAndKeys:@"beep-28", @"digit", @"beep-29", @"operation",
+	                                                          @"button-16", @"del", @"beep-21", @"decimal",
+	                                                          @"button-50", @"equals", @"button-20", @"memory",
+	                                                          @"button-43", @"negate", @"beep-26", @"clear",
+	                                                          @"beep-10", @"error",
+	                                                          nil] retain];
 	// FIXME: Slight lockup the first time a button is clicked before audio is played. Try System Sound Services
 	
 	// Attempt to restore data from UserDefaults if set (from potential pervious termination)
@@ -58,8 +61,9 @@
 	staySilent = [defaults boolForKey:@"staySilent"];
 
 	[self setOperationType:[defaults objectForKey:@"operationType"]];
-	[operationIndicator setText:operationType]; 
+	[operationIndicator setText:operationType];
 
+	// Set a default value, for first time launch of the app
 	[defaults registerDefaults:[NSDictionary dictionaryWithObject:@"0" forKey:@"displayString"]];
 	[self setDisplayString:[NSMutableString stringWithString:[defaults objectForKey:@"displayString"]]];
 	[displayLabel setText:displayString];
@@ -114,7 +118,8 @@
 	if (staySilent)
 		return;
 
-    NSString *path = [[NSBundle mainBundle] pathForResource:[clickSounds objectForKey:soundType] ofType:@"mp3"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:[clickSounds objectForKey:soundType] 
+													 ofType:@"mp3"];
     NSURL *file = [[NSURL alloc] initFileURLWithPath:path];
 	
     AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:file error:nil];
@@ -167,7 +172,9 @@
 	if (currentValue > 0) {
 		[displayString	insertString:@"-" atIndex:0];
 	} else if (currentValue < 0) {
-		[displayString replaceOccurrencesOfString:@"-" withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [displayString length])];
+		[displayString replaceOccurrencesOfString:@"-" withString:@""
+										  options:NSLiteralSearch 
+											range:NSMakeRange(0, [displayString length])];
 	} else
 		return;
 	
@@ -230,11 +237,11 @@
 	BOOL divideByZero = NO;
 	double temp;
 	
-	// Do nothing if there's no current active operation
+	// Do nothing if there's no current, active operation
 	if (!operationType)
 		return;
 
-	// For repeat operation (hitting equal again) swap the 2 values, so we can run the same operation again
+	// For repeat operations (hitting equal again) swap the 2 values, so we can run the same one again
 	if (clearNextButtonPress) {
 		temp = previousValue;
 		previousValue = currentValue;
@@ -260,7 +267,6 @@
 		[self playSound:@"error"];
 
 		[displayLabel setText:@"divide by zero error"];
-		currentValue = 0.0f;
 	}
 	else {
 		[self playSound:@"equals"];
@@ -289,10 +295,12 @@
 
 - (void)dealloc {
 	[displayLabel release];
+	[versionLabel release];
 	[memoryIndicator release];
 	[operationIndicator release];
 	[operationType release];
 	[displayString release];
+
 	[super dealloc];
 }
 

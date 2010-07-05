@@ -12,6 +12,7 @@
 @implementation CalcViewController
 
 @synthesize displayLabel, versionLabel, memoryIndicator, operationIndicator;
+@synthesize functionButtonScrollView;
 @synthesize operationType, displayString;
 
 /*
@@ -38,6 +39,13 @@
 							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
 							   [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]];
 	[versionLabel setText:versionString];
+
+	functionButtonsPosition = 0;
+	
+	// Initialize array of all of our supported operation types
+	operationMethods = [[NSArray arrayWithObjects:@"add", @"subtract", @"multiply", @"divide",
+												  @"squareRoot", @"powerOf", @"powerOfTwo", @"oneDividedBy", 
+												  nil] retain];	
 	
 	// Intialize button click sound data
 	clickSounds = [[NSDictionary dictionaryWithObjectsAndKeys:@"beep-28", @"digit", @"beep-29", @"operation",
@@ -50,7 +58,7 @@
 	
 	// Attempt to restore data from UserDefaults if set (from potential pervious termination)
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
+	
 	currentValue = [defaults doubleForKey:@"currentValue"];
 	previousValue = [defaults doubleForKey:@"previousValue"];
 	if (memoryValue = [defaults doubleForKey:@"memoryValue"])
@@ -58,7 +66,10 @@
 
 	clearNextButtonPress = [defaults boolForKey:@"clearNextButtonPress"];
 	decimalMode = [defaults boolForKey:@"decimaMode"];
-	staySilent = [defaults boolForKey:@"staySilent"];
+
+	// TODO: Reenable button clicks
+	//staySilent = [defaults boolForKey:@"staySilent"];
+	staySilent = 1;
 
 	[self setOperationType:[defaults objectForKey:@"operationType"]];
 	[operationIndicator setText:operationType];
@@ -129,6 +140,14 @@
     [player setDelegate:self];
 	[player play];
 	// FIXME: track down 'AddRunningClient starting device on non-zero client count' error.
+}
+
+- (IBAction)pageFunctionButtons {
+	// The 'f' key scrolls through multiple pages of red buttons
+	if (++functionButtonsPosition == 2)
+		functionButtonsPosition = 0;
+	
+	[functionButtonScrollView setContentOffset:CGPointMake(functionButtonsPosition * 320, 0) animated:YES];
 }
 
 // Lumping all the digits into a single method
@@ -202,6 +221,7 @@
 
 	UIButton *button = (UIButton *)sender;
 	[self setOperationType:button.titleLabel.text];
+	currentOperation = button.tag;
 	[operationIndicator setText:operationType]; 
 
 	previousValue = currentValue;
@@ -233,14 +253,32 @@
 	}
 }
 
-- (IBAction)equalsClicked {	
-	BOOL divideByZero = NO;
-	double temp;
-	
-	// Do nothing if there's no current, active operation
-	if (!operationType)
-		return;
+- (void)runMathOperation {
 
+}
+
+- (IBAction)equalsClicked {	
+	double temp;
+	NSString *errorText;
+	
+	// Do nothing if there's no current, active operation	
+	if (!currentOperation)
+		return;
+	
+	// Make sure we have this tag ID mapped to a math operation...
+	if (currentOperation > [operationMethods count]) {
+		NSLog(@"No math operation defined for tag %d", currentOperation);
+		return;
+	}
+
+	// ...and that a method exists for the math operation of that name
+	NSString *operationMethod = [NSString stringWithFormat:@"%@Operation", [operationMethods objectAtIndex:(currentOperation - 1)]];
+	SEL operationSelector = NSSelectorFromString(operationMethod);
+	if (![self respondsToSelector:operationSelector]) {
+		NSLog(@"Math operation %@ (tag %d) has no method defined", operationMethod, currentOperation);
+		return;
+	}	
+	
 	// For repeat operations (hitting equal again) swap the 2 values, so we can run the same one again
 	if (clearNextButtonPress) {
 		temp = previousValue;
@@ -249,24 +287,13 @@
 	} else
 		temp = currentValue;
 
-	if ([operationType isEqualToString:@"+"]) {
-		currentValue += previousValue;
-	} else if ([operationType isEqualToString:@"-"]) {
-		currentValue = previousValue - currentValue;
-	} else if ([operationType isEqualToString:@"x"]) {
-		currentValue *= previousValue;
-	} else if ([operationType isEqualToString:@"/"]) {
-		if (currentValue)
-			currentValue = previousValue / currentValue;
-		else {
-			divideByZero = YES;
-		}
-	}
+	// Dynamically route to the correct operations method
+	errorText = [self performSelector:operationSelector];
 	
-	if (divideByZero) {
+	if (errorText) {
 		[self playSound:@"error"];
 
-		[displayLabel setText:@"divide by zero error"];
+		[displayLabel setText:errorText];
 	}
 	else {
 		[self playSound:@"equals"];
@@ -285,13 +312,59 @@
 
 	// Hitting clear twice or after the result of an operation cancels out saved operation type
 	if ([displayString isEqualToString:@"0"] || clearNextButtonPress) {
-		[self setOperationType:@""]; 
+		[self setOperationType:@""];
+		currentOperation = 0;
 		[operationIndicator setText:@""];
 	}
 	
 	[self resetData];
 	[displayLabel setText:displayString];
 }
+
+// One function per operation type
+// TODO: return the result (and take 2 operator from stack?) 
+- (NSString *)addOperation {
+	currentValue += previousValue;
+	
+	return nil;
+}
+
+- (NSString *)subtractOperation {
+	currentValue = previousValue - currentValue;	
+
+	return nil;
+}
+
+- (NSString *)multiplyOperation {
+	currentValue *= previousValue;	
+
+	return nil;
+}
+
+- (NSString *)divideOperation {
+	if (currentValue) {
+		currentValue = previousValue / currentValue;
+		return nil;
+	} else
+		return [NSString stringWithString:@"divide by zero error"];
+}
+
+- (IBAction)squareRootOperation {
+	
+}
+
+- (void)powerOfOperation {
+	
+}
+
+- (IBAction)powerOfTwoOperation {
+	
+}
+
+- (IBAction)oneDividedByOperation {
+	
+}
+
 
 - (void)dealloc {
 	[displayLabel release];

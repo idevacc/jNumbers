@@ -147,7 +147,7 @@
 
 - (IBAction)pageFunctionButtons {
 	// The 'f' key scrolls through multiple pages of red buttons
-	if (++functionButtonsPosition == 2)
+	if (++functionButtonsPosition == 3)
 		functionButtonsPosition = 0;
 	
 	[functionButtonScrollView setContentOffset:CGPointMake(functionButtonsPosition * 320, 0) animated:YES];
@@ -234,8 +234,6 @@
 		[valueHistory addObject:[NSNumber numberWithDouble:currentValue]];
 
 	clearNextButtonPress = YES;
-
-	NSLog(@"%@", valueHistory);
 }
 
 
@@ -303,8 +301,6 @@
 	}
 
 	clearNextButtonPress = YES;
-	
-	NSLog(@"%@", valueHistory);
 }
 
 - (IBAction)clearClicked {
@@ -344,6 +340,14 @@
 		currentValue = memoryValue;
 		clearNextButtonPress = YES;
 	}
+}
+
+- (IBAction)showSettings {
+	
+}
+
+- (IBAction)showAbout {
+	
 }
 
 // One function per operation type

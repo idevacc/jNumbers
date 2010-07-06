@@ -58,6 +58,10 @@
 - (IBAction)negateClicked;
 - (IBAction)delClicked;
 
+- (IBAction)showSettings;
+- (IBAction)showAbout;
+	
+
 // Math operations
 - (NSNumber *)addOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
 - (NSNumber *)subtractOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;

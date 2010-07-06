@@ -15,6 +15,7 @@
 	UILabel *operationIndicator;
 	UILabel *versionLabel;
 	UIScrollView *functionButtonScrollView;
+	IBOutlet UIView *buttonView;
 	
 	BOOL clearNextButtonPress;			// next time something is entered, reset display
 	BOOL decimalMode;					// before or after decimal point?

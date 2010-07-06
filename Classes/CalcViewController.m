@@ -41,6 +41,7 @@
 	[versionLabel setText:versionString];
 
 	functionButtonsPosition = 0;
+	[functionButtonScrollView addSubview:buttonView];
 	
 	// Initialize array of all of our supported operation types
 	operationMethods = [[NSArray arrayWithObjects:@"add", @"subtract", @"multiply", @"divide",
@@ -71,8 +72,8 @@
 	decimalMode = [defaults boolForKey:@"decimaMode"];
 
 	// TODO: Reenable button clicks
-	//staySilent = [defaults boolForKey:@"staySilent"];
-	staySilent = 1;
+	staySilent = [defaults boolForKey:@"staySilent"];
+	//staySilent = 1;
 
 	[self setOperationType:[defaults objectForKey:@"operationType"]];
 	[operationIndicator setText:operationType];
@@ -397,6 +398,7 @@
 	[memoryIndicator release];
 	[operationIndicator release];
 	[functionButtonScrollView release];
+	[buttonView release];
 	
 	[operationType release];
 	[displayString release];

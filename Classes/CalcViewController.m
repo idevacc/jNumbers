@@ -7,6 +7,7 @@
 //
 
 #import "CalcViewController.h"
+#import "Calculator.h"
 #import <AVFoundation/AVFoundation.h>
 
 @implementation CalcViewController
@@ -71,9 +72,9 @@
 	clearNextButtonPress = [defaults boolForKey:@"clearNextButtonPress"];
 	decimalMode = [defaults boolForKey:@"decimaMode"];
 
-	// TODO: Reenable button clicks
-	staySilent = [defaults boolForKey:@"staySilent"];
-	//staySilent = 1;
+	// TODO: Reenable button clicks (put in settings)
+	//staySilent = [defaults boolForKey:@"staySilent"];
+	staySilent = 1;
 
 	[self setOperationType:[defaults objectForKey:@"operationType"]];
 	[operationIndicator setText:operationType];
@@ -259,7 +260,7 @@
 	NSString *operationMethod = [NSString stringWithFormat:@"%@Operand:withOperand:",
 								 [operationMethods objectAtIndex:(currentOperation - 1)]];
 	SEL operationSelector = NSSelectorFromString(operationMethod);
-	if (![self respondsToSelector:operationSelector]) {
+	if (![Calculator respondsToSelector:operationSelector]) {
 		NSLog(@"Math operation %@ (tag %d) has no method defined", operationMethod, currentOperation);
 		return;
 	}	
@@ -277,9 +278,9 @@
 	// Dynamically route to the correct operations method
 	int error = 0;
 	@try {
-		currentValue = [[self performSelector:operationSelector 
-								   withObject:[NSNumber numberWithDouble:operand1] 
-								   withObject:[NSNumber numberWithDouble:operand2]] 
+		currentValue = [[Calculator performSelector:operationSelector 
+										 withObject:[NSNumber numberWithDouble:operand1] 
+										 withObject:[NSNumber numberWithDouble:operand2]] 
 						doubleValue];
 	}
 	@catch (NSException *exception) {
@@ -351,36 +352,8 @@
 	
 }
 
-// One function per operation type
-// TODO: return the result (and take 2 operator from stack?) 
-- (NSNumber *)addOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
-	return [NSNumber numberWithDouble:([operand1 doubleValue] + [operand2 doubleValue])];
-}
-
-- (NSNumber *)subtractOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
-	return [NSNumber numberWithDouble:([operand1 doubleValue] - [operand2 doubleValue])];
-}
-
-- (NSNumber *)multiplyOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
-	return [NSNumber numberWithDouble:([operand1 doubleValue] * [operand2 doubleValue])];
-}
-
-- (NSNumber *)divideByOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
-	if (operand2)
-		return [NSNumber numberWithDouble:([operand1 doubleValue] / [operand2 doubleValue])];
-	else {
-		NSException *exception = [NSException exceptionWithName:@"DivideByZero" reason:@"divide by zero" userInfo:nil];
-		[exception raise];
-		return 0;
-	}
-}
-
 - (IBAction)squareRootOperation {
 	
-}
-
-- (NSNumber *)powerOfOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
-	return [NSNumber numberWithDouble:0.0f];
 }
 
 - (IBAction)powerOfTwoOperation {

@@ -30,6 +30,7 @@
 		EDAF9BED11E062EC0041C2E2 /* button-50.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BE511E062EC0041C2E2 /* button-50.mp3 */; };
 		EDAF9BF211E063EA0041C2E2 /* beep-10.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EDAF9BF111E063EA0041C2E2 /* beep-10.mp3 */; };
 		EDAF9BFB11E065570041C2E2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDAF9BFA11E065570041C2E2 /* AVFoundation.framework */; };
+		EDC8E5A711E3A1F000F3FBC6 /* Calculator.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC8E5A611E3A1F000F3FBC6 /* Calculator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,8 @@
 		EDAF9BF111E063EA0041C2E2 /* beep-10.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "beep-10.mp3"; sourceTree = "<group>"; };
 		EDAF9BFA11E065570041C2E2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		EDC2838411D81F6400CB0508 /* jNumbers-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "jNumbers-Info.plist"; sourceTree = "<group>"; };
+		EDC8E5A511E3A1F000F3FBC6 /* Calculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calculator.h; sourceTree = "<group>"; };
+		EDC8E5A611E3A1F000F3FBC6 /* Calculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calculator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,8 @@
 				28D7ACF70DDB3853001CB0EB /* CalcViewController.m */,
 				ED07B7A711D906B300F82BB6 /* CustomUIButton.h */,
 				ED07B7A811D906B300F82BB6 /* CustomUIButton.m */,
+				EDC8E5A511E3A1F000F3FBC6 /* Calculator.h */,
+				EDC8E5A611E3A1F000F3FBC6 /* Calculator.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -234,6 +239,7 @@
 				1D3623260D0F684500981E51 /* jNumbersAppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* CalcViewController.m in Sources */,
 				ED07B7A911D906B300F82BB6 /* CustomUIButton.m in Sources */,
+				EDC8E5A711E3A1F000F3FBC6 /* Calculator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +252,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Joost Schuur (5QJA93YL8A)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 8;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

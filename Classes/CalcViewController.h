@@ -61,14 +61,6 @@
 
 - (IBAction)showSettings;
 - (IBAction)showAbout;
-	
-
-// Math operations
-- (NSNumber *)addOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
-- (NSNumber *)subtractOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
-- (NSNumber *)multiplyOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
-- (NSNumber *)divideByOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
-- (NSNumber *)powerOfOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
 
 - (IBAction)squareRootOperation;
 - (IBAction)powerOfTwoOperation;

@@ -58,9 +58,12 @@
 	
 	// Attempt to restore data from UserDefaults if set (from potential pervious termination)
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+	// TOOD: Restore this from saved state, but truncate at 100
+	valueHistory = [[NSMutableArray alloc] init];
 	
 	currentValue = [defaults doubleForKey:@"currentValue"];
-	previousValue = [defaults doubleForKey:@"previousValue"];
+	lastEnteredValue = [defaults doubleForKey:@"lastEnteredValue"];
 	if (memoryValue = [defaults doubleForKey:@"memoryValue"])
 		[memoryIndicator setHidden:NO];
 
@@ -109,7 +112,7 @@
 	[defaults setObject:displayString forKey:@"displayString"];
 	[defaults setObject:operationType forKey:@"operationType"];
 	[defaults setDouble:currentValue forKey:@"currentValue"];
-	[defaults setDouble:previousValue forKey:@"previousValue"];
+	[defaults setDouble:lastEnteredValue forKey:@"lastEnteredValue"];
 	[defaults setDouble:memoryValue forKey:@"memoryValue"];
 	[defaults setBool:clearNextButtonPress forKey:@"clearNextButtonPress"];
 	[defaults setBool:decimalMode forKey:@"decimalMode"];
@@ -219,47 +222,29 @@
 - (IBAction)operationClicked:(id)sender {
 	[self playSound:@"operation"];
 
+	// Set the operation icon and remember the operation type
 	UIButton *button = (UIButton *)sender;
 	[self setOperationType:button.titleLabel.text];
-	currentOperation = button.tag;
 	[operationIndicator setText:operationType]; 
+	currentOperation = button.tag;
 
-	previousValue = currentValue;
+	// If the last value hasn't been added to the history yet, do so and remember it
+	// FIXME: Doesn't work for memory 
+	if (!clearNextButtonPress)
+		[valueHistory addObject:[NSNumber numberWithDouble:currentValue]];
+
 	clearNextButtonPress = YES;
+
+	NSLog(@"%@", valueHistory);
 }
 
-- (IBAction)memoryClicked:(id)sender {
-	[self playSound:@"memory"];
-
-	UIButton *button = (UIButton *)sender;
-	NSString *memoryType = button.titleLabel.text;
-	
-	if ([memoryType isEqualToString:@"mc"]) {
-		memoryValue = 0.0;
-		[memoryIndicator setHidden:YES];
-	} else if ([memoryType isEqualToString:@"m+"]) {
-		memoryValue += currentValue;
-		[memoryIndicator setHidden:NO];
-	} else if ([memoryType isEqualToString:@"m-"]) {
-		memoryValue = memoryValue - currentValue;
-		[memoryIndicator setHidden:NO];
-	} else if ([memoryType isEqualToString:@"mr"]) {
-		// FIXME: Hitting equal twice doesn't work after mr
-		[self setDisplayString:[NSMutableString stringWithFormat:@"%g", memoryValue]];
-
-		[displayLabel setText:displayString];
-		currentValue = memoryValue;
-		clearNextButtonPress = YES;
-	}
-}
 
 - (void)runMathOperation {
 
 }
 
 - (IBAction)equalsClicked {	
-	double temp;
-	NSString *errorText;
+	double operand1, operand2;
 	
 	// Do nothing if there's no current, active operation	
 	if (!currentOperation)
@@ -272,39 +257,54 @@
 	}
 
 	// ...and that a method exists for the math operation of that name
-	NSString *operationMethod = [NSString stringWithFormat:@"%@Operation", [operationMethods objectAtIndex:(currentOperation - 1)]];
+	NSString *operationMethod = [NSString stringWithFormat:@"%@Operand:withOperand:",
+								 [operationMethods objectAtIndex:(currentOperation - 1)]];
 	SEL operationSelector = NSSelectorFromString(operationMethod);
 	if (![self respondsToSelector:operationSelector]) {
 		NSLog(@"Math operation %@ (tag %d) has no method defined", operationMethod, currentOperation);
 		return;
 	}	
 	
-	// For repeat operations (hitting equal again) swap the 2 values, so we can run the same one again
+	// Define our operands. For repeat operations (hitting equal again) use the last manually entered value.
+	operand1 = [[valueHistory lastObject] doubleValue];
 	if (clearNextButtonPress) {
-		temp = previousValue;
-		previousValue = currentValue;
-		currentValue = temp;
-	} else
-		temp = currentValue;
+		operand2 = lastEnteredValue;
+	} else {
+		operand2 = currentValue;
+		[valueHistory addObject:[NSNumber numberWithDouble:currentValue]];
+	}
+	lastEnteredValue = operand2;	
 
 	// Dynamically route to the correct operations method
-	errorText = [self performSelector:operationSelector];
-	
-	if (errorText) {
-		[self playSound:@"error"];
-
-		[displayLabel setText:errorText];
+	int error = 0;
+	@try {
+		currentValue = [[self performSelector:operationSelector 
+								   withObject:[NSNumber numberWithDouble:operand1] 
+								   withObject:[NSNumber numberWithDouble:operand2]] 
+						doubleValue];
 	}
-	else {
+	@catch (NSException *exception) {
+		[self playSound:@"error"];
+		error = 1;
+		
+		[displayLabel setText:[exception reason]];
+	}
+	
+	if (!error) {
 		[self playSound:@"equals"];
 
+		// hitting equal twice only saves the last result in a chain
+		if(clearNextButtonPress)
+			[valueHistory removeLastObject];
+		[valueHistory addObject:[NSNumber numberWithDouble:currentValue]];
+		
 		[self setDisplayString:[NSMutableString stringWithFormat:@"%g", currentValue]];
 		[displayLabel setText:displayString];
 	}
 
-	// Store this, so we can perform the operation again if the equal sign is hit again
-	previousValue = temp;
 	clearNextButtonPress = YES;
+	
+	NSLog(@"%@", valueHistory);
 }
 
 - (IBAction)clearClicked {
@@ -321,40 +321,61 @@
 	[displayLabel setText:displayString];
 }
 
+- (IBAction)memoryClicked:(id)sender {
+	[self playSound:@"memory"];
+	
+	UIButton *button = (UIButton *)sender;
+	NSString *memoryType = button.titleLabel.text;
+	
+	if ([memoryType isEqualToString:@"mc"]) {
+		memoryValue = 0.0;
+		[memoryIndicator setHidden:YES];
+	} else if ([memoryType isEqualToString:@"m+"]) {
+		memoryValue += currentValue;
+		[memoryIndicator setHidden:NO];
+	} else if ([memoryType isEqualToString:@"m-"]) {
+		memoryValue = memoryValue - currentValue;
+		[memoryIndicator setHidden:NO];
+	} else if ([memoryType isEqualToString:@"mr"]) {
+		// FIXME: Hitting equal twice doesn't work after mr
+		[self setDisplayString:[NSMutableString stringWithFormat:@"%g", memoryValue]];
+		
+		[displayLabel setText:displayString];
+		currentValue = memoryValue;
+		clearNextButtonPress = YES;
+	}
+}
+
 // One function per operation type
 // TODO: return the result (and take 2 operator from stack?) 
-- (NSString *)addOperation {
-	currentValue += previousValue;
-	
-	return nil;
+- (NSNumber *)addOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
+	return [NSNumber numberWithDouble:([operand1 doubleValue] + [operand2 doubleValue])];
 }
 
-- (NSString *)subtractOperation {
-	currentValue = previousValue - currentValue;	
-
-	return nil;
+- (NSNumber *)subtractOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
+	return [NSNumber numberWithDouble:([operand1 doubleValue] - [operand2 doubleValue])];
 }
 
-- (NSString *)multiplyOperation {
-	currentValue *= previousValue;	
-
-	return nil;
+- (NSNumber *)multiplyOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
+	return [NSNumber numberWithDouble:([operand1 doubleValue] * [operand2 doubleValue])];
 }
 
-- (NSString *)divideOperation {
-	if (currentValue) {
-		currentValue = previousValue / currentValue;
-		return nil;
-	} else
-		return [NSString stringWithString:@"divide by zero error"];
+- (NSNumber *)divideByOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
+	if (operand2)
+		return [NSNumber numberWithDouble:([operand1 doubleValue] / [operand2 doubleValue])];
+	else {
+		NSException *exception = [NSException exceptionWithName:@"DivideByZero" reason:@"divide by zero" userInfo:nil];
+		[exception raise];
+		return 0;
+	}
 }
 
 - (IBAction)squareRootOperation {
 	
 }
 
-- (void)powerOfOperation {
-	
+- (NSNumber *)powerOfOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2 {
+	return [NSNumber numberWithDouble:0.0f];
 }
 
 - (IBAction)powerOfTwoOperation {
@@ -371,8 +392,13 @@
 	[versionLabel release];
 	[memoryIndicator release];
 	[operationIndicator release];
+	[functionButtonScrollView release];
+	
 	[operationType release];
 	[displayString release];
+	[valueHistory release];
+	[operationMethods release];
+	[clickSounds release];
 
 	[super dealloc];
 }

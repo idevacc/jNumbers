@@ -16,15 +16,22 @@
 	UILabel *versionLabel;
 	UIScrollView *functionButtonScrollView;
 	
-	double currentValue, previousValue, memoryValue;
-	int functionButtonsPosition;
-	NSString *operationType;
+	BOOL clearNextButtonPress;			// next time something is entered, reset display
+	BOOL decimalMode;					// before or after decimal point?
+	BOOL staySilent;					// don't play button click sounds
+
+	double currentValue;				// number visible on the display
+	double lastEnteredValue;			// save previous one for repeat operations
+	double memoryValue;					// number saved in memory 
+	int functionButtonsPosition;		// what set of red buttons we're displaying
+	NSMutableArray *valueHistory;		// stack of previous entered numbers and results
+	int currentOperation;				// maps to current math operation	
 	// TODO: Put this in saveState and reset where needed
-	int currentOperation;
+
 	NSMutableString *displayString;
-	BOOL clearNextButtonPress, decimalMode, staySilent;
-	NSDictionary *clickSounds;
-	NSArray *operationMethods;
+	NSString *operationType;
+	NSDictionary *clickSounds;			// maps sound types to sound file name
+	NSArray *operationMethods;			// maps button tag to math operation
 }
 
 @property (nonatomic, retain) IBOutlet UILabel *displayLabel;
@@ -52,13 +59,13 @@
 - (IBAction)delClicked;
 
 // Math operations
-- (NSString *)addOperation;
-- (NSString *)subtractOperation;
-- (NSString *)multiplyOperation;
-- (NSString *)divideOperation;
+- (NSNumber *)addOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
+- (NSNumber *)subtractOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
+- (NSNumber *)multiplyOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
+- (NSNumber *)divideByOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
+- (NSNumber *)powerOfOperand:(NSNumber *)operand1 withOperand:(NSNumber *)operand2;
 
 - (IBAction)squareRootOperation;
-- (void)powerOfOperation;
 - (IBAction)powerOfTwoOperation;
 - (IBAction)oneDividedByOperation;
 	

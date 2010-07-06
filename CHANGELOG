@@ -1,4 +1,10 @@
 
+0.1.0 (7/5/10)
+
+- New 'f' button scrolls through lists of additional function buttons
+- Internal restructuring of how math functions are called, history of values now kept on stack
+- Audio on button click (disabled)
+
 0.1.0 (7/3/10)
 
 - Basic calculator functions, +/-, clear, backspace
